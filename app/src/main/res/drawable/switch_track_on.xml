@@ -1,0 +1,18 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:dither="true"
+    android:shape="rectangle"
+    android:useLevel="false"
+    android:visible="true">
+    <gradient
+        android:angle="270"
+        android:endColor="@color/primary_color"
+        android:startColor="@color/primary_color"/>
+    <corners android:radius="50dp" />
+    <stroke
+        android:width="0dp"
+        android:color="@android:color/transparent">
+    </stroke>
+    <size
+        android:width="59dp"
+        android:height="30dp" />
+</shape>
