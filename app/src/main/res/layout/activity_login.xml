@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            app:suffixTextColor="@color/primary_color"
             android:hint="Email"
             app:hintTextColor="@color/grey2"
             app:boxStrokeColor="@color/grey2"
@@ -82,8 +81,9 @@
             android:text="Lupa Password?"
             android:textSize="18sp"
             android:gravity="center"
+            android:textStyle="bold"
             android:textColor="@color/primary_color"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="5dp" />
 
 
     </LinearLayout>

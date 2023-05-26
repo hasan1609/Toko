@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.go4sumbergedang.toko.ui.home.HomeFragment"
+        android:name="com.go4sumbergedang.toko.ui.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_transaksi" />
     <fragment
         android:id="@+id/profilFragment"
-        android:name="com.go4sumbergedang.toko.ui.profil.ProfilFragment"
+        android:name="com.go4sumbergedang.toko.ui.fragment.ProfilFragment"
         android:label="fragment_profil"
         tools:layout="@layout/fragment_profil" />
 </navigation>

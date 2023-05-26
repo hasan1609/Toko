@@ -1,4 +1,4 @@
-package com.go4sumbergedang.toko.ui.transaksi
+package com.go4sumbergedang.toko.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

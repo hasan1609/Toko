@@ -4,6 +4,7 @@
     package="com.go4sumbergedang.toko">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,22 @@
         android:theme="@style/Theme.Toko"
         tools:targetApi="31">
         <activity
-            android:name=".ui.HomeActivity"
+            android:name="com.go4sumbergedang.toko.ui.activity.UlasanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.DetailProfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.EditProdukActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.AddProdukActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.DataProdukActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

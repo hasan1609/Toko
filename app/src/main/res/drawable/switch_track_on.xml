@@ -13,6 +13,6 @@
         android:color="@android:color/transparent">
     </stroke>
     <size
-        android:width="59dp"
-        android:height="30dp" />
+        android:width="50dp"
+        android:height="20dp" />
 </shape>

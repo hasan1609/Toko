@@ -6,27 +6,32 @@
 
     </data>
     
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="23dp"
-        tools:context=".ui.home.HomeFragment">
+        tools:context=".ui.fragment.HomeFragment">
 
         <TextView
+            android:id="@+id/txt_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Resto G4S"
             android:layout_marginTop="14dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:paddingHorizontal="23dp"
+            android:layout_alignParentTop="true"/>
 
         <LinearLayout
+            android:id="@+id/ly_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="23dp"
+            android:layout_below="@+id/txt_header">
 
             <TextView
                 android:layout_width="0dp"
@@ -52,24 +57,42 @@
             android:id="@+id/garis"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_below="@+id/ly_status"
             android:layout_marginTop="15dp"
-            android:background="@color/scndary_color" />
+            android:background="@color/scndary_color"
+            android:layout_marginHorizontal="23dp"/>
 
         <TextView
+            android:id="@+id/header_produk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:text="Kategori Produk"
+            android:layout_below="@+id/garis"
+            android:paddingHorizontal="23dp"
             android:textSize="16sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_kategori"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
+            android:layout_below="@id/header_produk"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="23dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_produk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_plus"
+            android:tintMode="@color/white"
+            android:backgroundTint="@color/primary_color"/>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </layout>

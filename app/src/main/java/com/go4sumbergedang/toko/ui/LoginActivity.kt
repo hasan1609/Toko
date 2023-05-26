@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.databinding.ActivityLoginBinding
+import com.go4sumbergedang.toko.ui.activity.HomeActivity
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.startActivity
 

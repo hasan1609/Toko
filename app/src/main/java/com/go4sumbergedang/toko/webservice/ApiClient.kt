@@ -15,10 +15,10 @@ class ApiClient {
         }.build()
 
         private fun getClient() : Retrofit {
-            return if (retrofit ==null){
+            return if (retrofit == null){
                 retrofit = Retrofit.Builder().apply {
                     client(opt)
-                    baseUrl("http://192.168.2.11/g4s/public/api/")
+                    baseUrl("http://192.168.2.42/g4s/public/api/")
                     addConverterFactory(GsonConverterFactory.create())
                 }.build()
                 retrofit!!
@@ -27,7 +27,7 @@ class ApiClient {
             }
         }
 
-        fun instance() = getClient().create(ApiService::class.java)
+        fun instance(): ApiService = getClient().create(ApiService::class.java)
     }
 
 }

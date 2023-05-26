@@ -1,5 +1,7 @@
-package com.go4sumbergedang.toko.ui.home
+package com.go4sumbergedang.toko.ui.fragment
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,9 +15,13 @@ import com.go4sumbergedang.toko.databinding.FragmentHomeBinding
 import com.go4sumbergedang.toko.model.KategoriModel
 import com.go4sumbergedang.toko.model.ResponseKategori
 import com.go4sumbergedang.toko.model.ResponseStatusToko
+import com.go4sumbergedang.toko.ui.activity.AddProdukActivity
+import com.go4sumbergedang.toko.ui.activity.DataProdukActivity
 import com.go4sumbergedang.toko.webservice.ApiClient
+import com.google.gson.Gson
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +49,10 @@ class HomeFragment : Fragment(), AnkoLogger {
                 updateStatus(param!!)
             }
         }
+
+        binding.addProduk.setOnClickListener{
+            startActivity<AddProdukActivity>()
+        }
         return binding.root
     }
 
@@ -53,15 +63,26 @@ class HomeFragment : Fragment(), AnkoLogger {
     }
 
     private fun getKategoriProduk() {
+        if (!isAdded) {
+            // Fragment tidak terhubung ke aktivitas, hentikan eksekusi lebih lanjut
+            return
+        }
+        // Memeriksa koneksi internet sebelum memulai panggilan API
+        if (!isNetworkAvailable()) {
+            toast("Tidak ada koneksi internet. Silakan cek koneksi Anda dan coba lagi.")
+            return
+        }
         binding.rvKategori.layoutManager = LinearLayoutManager(requireActivity())
         binding.rvKategori.setHasFixedSize(true)
         (binding.rvKategori.layoutManager as LinearLayoutManager).orientation =
             LinearLayoutManager.VERTICAL
+
         api.getKategori("c9927b1a-a334-4bd8-9633-62fb9b843b85").enqueue(object : Callback<ResponseKategori> {
-            override fun onResponse(
-                call: Call<ResponseKategori>,
-                response: Response<ResponseKategori>
-            ) {
+            override fun onResponse(call: Call<ResponseKategori>, response: Response<ResponseKategori>) {
+                if (!isAdded) {
+                    // Fragment tidak terhubung ke aktivitas lagi, hentikan eksekusi lebih lanjut
+                    return
+                }
                 try {
                     if (response.isSuccessful) {
                         val notesList = mutableListOf<KategoriModel>()
@@ -69,38 +90,60 @@ class HomeFragment : Fragment(), AnkoLogger {
                         if (data!!.status == true) {
                             for (hasil in data.data!!) {
                                 notesList.add(hasil!!)
-                                mAdapter = KategoriAdapter(notesList, requireActivity())
-                                binding.rvKategori.adapter = mAdapter
-                                mAdapter.setDialog(object : KategoriAdapter.Dialog {
-                                    override fun onClick(position: Int, note: KategoriModel) {
-                                    }
-                                })
-                                mAdapter.notifyDataSetChanged()
                             }
+
+                            mAdapter = KategoriAdapter(notesList, requireActivity())
+                            binding.rvKategori.adapter = mAdapter
+
+                            mAdapter.setDialog(object : KategoriAdapter.Dialog {
+                                override fun onClick(position: Int, note: KategoriModel) {
+                                    val gson = Gson()
+                                    val noteJson = gson.toJson(note)
+                                    startActivity<DataProdukActivity>("kategori" to noteJson)
+                                }
+                            })
+
+                            mAdapter.notifyDataSetChanged()
                         }
                     } else {
                         toast("gagal mendapatkan response")
                     }
                 } catch (e: Exception) {
-                    info { "hasan ${e.message}" }
-                    toast(e.message.toString())
+                    if (isAdded) {
+                        info { "hasan ${e.message}" }
+                        toast(e.message.toString())
+                    }
                 }
             }
+
             override fun onFailure(call: Call<ResponseKategori>, t: Throwable) {
-                info { "hasan ${t.message}" }
-                toast(t.message.toString())
+                if (isAdded) {
+                    info { "hasan ${t.message}" }
+                    toast(t.message.toString())
+                }
             }
-
         })
-
     }
 
+
     private fun getStatusToko() {
+        if (!isAdded) {
+            // Fragment tidak terhubung ke aktivitas lagi, hentikan eksekusi lebih lanjut
+            return
+        }
+        if (!isNetworkAvailable()) {
+            toast("Tidak ada koneksi internet. Silakan cek koneksi Anda dan coba lagi.")
+            return
+        }
         api.getStatusToko("c9927b1a-a334-4bd8-9633-62fb9b843b85").enqueue(object : Callback<ResponseStatusToko> {
             override fun onResponse(
                 call: Call<ResponseStatusToko>,
                 response: Response<ResponseStatusToko>
             ) {
+                if (!isAdded) {
+                    // Fragment tidak terhubung ke aktivitas lagi, hentikan eksekusi lebih lanjut
+                    return
+                }
                 try {
                     if (response.isSuccessful) {
                         val data = response.body()
@@ -114,8 +157,10 @@ class HomeFragment : Fragment(), AnkoLogger {
                 }
             }
             override fun onFailure(call: Call<ResponseStatusToko>, t: Throwable) {
-                info { "Hasan ${t.message}" }
-                toast(t.toString())
+                if (isAdded) {
+                    info { "hasan ${t.message}" }
+                    toast(t.message.toString())
+                }
             }
         })
     }
@@ -145,5 +190,12 @@ class HomeFragment : Fragment(), AnkoLogger {
             }
 
         })
+    }
+
+    // Fungsi untuk memeriksa ketersediaan koneksi internet
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }
