@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.databinding.FragmentProfilBinding
 import com.go4sumbergedang.toko.ui.activity.DetailProfilActivity
+import com.go4sumbergedang.toko.ui.activity.UlasanActivity
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.support.v4.startActivity
 
@@ -24,6 +25,10 @@ class ProfilFragment : Fragment(), AnkoLogger {
         binding.lifecycleOwner = this
         binding.detailToko.setOnClickListener{
             startActivity<DetailProfilActivity>()
+        }
+
+        binding.ulasan.setOnClickListener {
+            startActivity<UlasanActivity>()
         }
         return binding.root
     }

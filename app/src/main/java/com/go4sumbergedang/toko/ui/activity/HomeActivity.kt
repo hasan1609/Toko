@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.ui.fragment.HomeFragment
-import com.go4sumbergedang.toko.ui.notifikasi.NotifikasiFragment
+import com.go4sumbergedang.toko.ui.fragment.NotifikasiFragment
 import com.go4sumbergedang.toko.ui.fragment.ProfilFragment
-import com.go4sumbergedang.toko.ui.transaksi.TransaksiFragment
+import com.go4sumbergedang.toko.ui.fragment.TransaksiFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {

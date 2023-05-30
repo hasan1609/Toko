@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,7 @@
         android:theme="@style/Theme.Toko"
         tools:targetApi="31">
         <activity
-            android:name="com.go4sumbergedang.toko.ui.activity.UlasanActivity"
+            android:name=".ui.activity.UlasanActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.DetailProfilActivity"
