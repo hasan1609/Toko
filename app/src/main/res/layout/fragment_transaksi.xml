@@ -3,12 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.transaksi.TransaksiFragment">
+    tools:context=".ui.fragment.TransaksiFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Riwayat Transaksi"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_marginVertical="20dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maaf belum ada riwayat order"
+            android:textSize="14dp"
+            android:textStyle="normal"
+            android:gravity="center"/>
+    </LinearLayout>
 
 </FrameLayout>

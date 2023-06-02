@@ -39,11 +39,11 @@ interface ApiService {
     @Multipart
     @POST("makanan")
     fun uploadProduk(
-        @Part("resto_id") restoId: RequestBody,
-        @Part("nama_makanan") namaMakanan: RequestBody,
+        @Part("resto_id") resto_id: RequestBody,
+        @Part("nama_makanan") nama_makanan: RequestBody,
         @Part("harga") harga: RequestBody,
         @Part("keterangan") keterangan: RequestBody,
         @Part("kategori") kategori: RequestBody,
-        @Part foto_makanan: MultipartBody.Part
+        @Part foto_makanan: MultipartBody.Part?
     ): Call<ResponsePostData>
 }
