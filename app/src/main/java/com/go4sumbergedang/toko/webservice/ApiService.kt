@@ -11,14 +11,14 @@ interface ApiService {
     @GET("status/resto/{id}")
     fun getStatusToko(
         @Path("id") id: String
-    ): Call<ResponseStatusToko>
+    ): Call<ResponseStatus>
 
     @FormUrlEncoded
     @POST("status/resto/{id}")
     fun updateStatusToko(
         @Path("id") id: String,
         @Field("param") param: String
-    ): Call<ResponseStatusToko>
+    ): Call<ResponseStatus>
 
     @GET("count/kategori/{id}")
     fun getKategori(
@@ -45,5 +45,33 @@ interface ApiService {
         @Part("keterangan") keterangan: RequestBody,
         @Part("kategori") kategori: RequestBody,
         @Part foto_makanan: MultipartBody.Part?
+    ): Call<ResponsePostData>
+
+    @FormUrlEncoded
+    @POST("status/makanan/{id}")
+    fun updateStatusProduk(
+        @Path("id") id: String,
+        @Field("param") param: String
+    ): Call<ResponseStatus>
+
+    @Multipart
+    @POST("makanan/{id}")
+    fun updateProdukWithFoto(
+        @Path("id") id: String,
+        @Part("nama_makanan") nama_makanan: RequestBody,
+        @Part("harga") harga: RequestBody,
+        @Part("keterangan") keterangan: RequestBody,
+        @Part("kategori") kategori: RequestBody,
+        @Part foto_makanan: MultipartBody.Part?
+    ): Call<ResponsePostData>
+
+    @FormUrlEncoded
+    @POST("makanan/{id}")
+    fun updateProdukNofoto(
+        @Path("id") id: String,
+        @Field("nama_makanan") nama_makanan: String,
+        @Field("harga") harga: String,
+        @Field("keterangan") keterangan: String,
+        @Field("kategori") kategori: String,
     ): Call<ResponsePostData>
 }

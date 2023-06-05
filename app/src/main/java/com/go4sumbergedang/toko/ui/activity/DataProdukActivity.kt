@@ -1,5 +1,6 @@
 package com.go4sumbergedang.toko.ui.activity
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -7,14 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.adapter.ProdukAdapter
 import com.go4sumbergedang.toko.databinding.ActivityDataProdukBinding
-import com.go4sumbergedang.toko.model.KategoriModel
-import com.go4sumbergedang.toko.model.ProdukModel
-import com.go4sumbergedang.toko.model.ResponseProduk
+import com.go4sumbergedang.toko.model.*
 import com.go4sumbergedang.toko.webservice.ApiClient
 import com.google.gson.Gson
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -68,11 +68,48 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
                                 notesList.add(hasil!!)
                                 mAdapter = ProdukAdapter(notesList, this@DataProdukActivity)
                                 binding.rvProduk.adapter = mAdapter
-                                mAdapter.setDialog(object : ProdukAdapter.Dialog {
-                                    override fun onClick(position: Int, note: ProdukModel) {
+                                mAdapter.setOnEditClickListener(object : ProdukAdapter.OnEditClickListener{
+                                    override fun onEditClick(position: Int, note: ProdukModel) {
                                         val gson = Gson()
                                         val noteJson = gson.toJson(note)
                                         startActivity<EditProdukActivity>("detail" to noteJson)
+                                    }
+                                })
+
+                                mAdapter.setOnDeleteClickListener(object : ProdukAdapter.OnDeleteClickListener{
+                                    override fun onDeleteClick(position: Int, note: ProdukModel) {
+                                        val builder =
+                                            AlertDialog.Builder(this@DataProdukActivity)
+                                        builder.setTitle("Hapus Data")
+                                        builder.setPositiveButton("Ya") { dialog, which ->
+                                            ApiClient.instance().hapusProduk(note.idMakanan.toString()).enqueue(object :
+                                                Callback<ResponsePostData> {
+                                                override fun onResponse(
+                                                    call: Call<ResponsePostData>,
+                                                    response: Response<ResponsePostData>
+                                                ) {
+                                                    try {
+                                                        if (response.body()!!.status == true) {
+                                                            toast("Berhasil mengapus")
+                                                        } else {
+                                                            toast("Gagal mengapus")
+                                                        }
+                                                    } catch (e: Exception) {
+                                                        toast("Kesalahan jaringan")
+                                                        info { "hasan ${e.message}${response.code()} " }
+                                                    }
+                                                }
+                                                override fun onFailure(
+                                                    call: Call<ResponsePostData>,
+                                                    t: Throwable
+                                                ) {
+                                                    toast("Respon server gagal")
+                                                }
+                                            })
+                                        }
+                                        builder.setNegativeButton("Batal") { dialog, which ->
+                                        }
+                                        builder.show()
                                     }
                                 })
                                 mAdapter.notifyDataSetChanged()

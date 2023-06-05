@@ -4,10 +4,10 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-data class ResponseStatusToko(
+data class ResponseStatus(
 
 	@field:SerializedName("data")
-	val data: StatusTokoModel? = null,
+	val data: StatusModel? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -16,7 +16,7 @@ data class ResponseStatusToko(
 	val status: Boolean? = null
 )
 
-data class StatusTokoModel(
+data class StatusModel(
 
 	@field:SerializedName("status")
 	val status: String? = null

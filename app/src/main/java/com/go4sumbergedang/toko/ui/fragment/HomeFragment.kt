@@ -14,7 +14,7 @@ import com.go4sumbergedang.toko.adapter.KategoriAdapter
 import com.go4sumbergedang.toko.databinding.FragmentHomeBinding
 import com.go4sumbergedang.toko.model.KategoriModel
 import com.go4sumbergedang.toko.model.ResponseKategori
-import com.go4sumbergedang.toko.model.ResponseStatusToko
+import com.go4sumbergedang.toko.model.ResponseStatus
 import com.go4sumbergedang.toko.ui.activity.AddProdukActivity
 import com.go4sumbergedang.toko.ui.activity.DataProdukActivity
 import com.go4sumbergedang.toko.webservice.ApiClient
@@ -135,10 +135,10 @@ class HomeFragment : Fragment(), AnkoLogger {
             toast("Tidak ada koneksi internet. Silakan cek koneksi Anda dan coba lagi.")
             return
         }
-        api.getStatusToko("c9927b1a-a334-4bd8-9633-62fb9b843b85").enqueue(object : Callback<ResponseStatusToko> {
+        api.getStatusToko("c9927b1a-a334-4bd8-9633-62fb9b843b85").enqueue(object : Callback<ResponseStatus> {
             override fun onResponse(
-                call: Call<ResponseStatusToko>,
-                response: Response<ResponseStatusToko>
+                call: Call<ResponseStatus>,
+                response: Response<ResponseStatus>
             ) {
                 if (!isAdded) {
                     // Fragment tidak terhubung ke aktivitas lagi, hentikan eksekusi lebih lanjut
@@ -156,7 +156,7 @@ class HomeFragment : Fragment(), AnkoLogger {
                     toast(e.toString())
                 }
             }
-            override fun onFailure(call: Call<ResponseStatusToko>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseStatus>, t: Throwable) {
                 if (isAdded) {
                     info { "hasan ${t.message}" }
                     toast(t.message.toString())
@@ -166,10 +166,10 @@ class HomeFragment : Fragment(), AnkoLogger {
     }
 
     private fun updateStatus(param: String){
-        api.updateStatusToko("c9927b1a-a334-4bd8-9633-62fb9b843b85", param).enqueue(object :Callback<ResponseStatusToko>{
+        api.updateStatusToko("c9927b1a-a334-4bd8-9633-62fb9b843b85", param).enqueue(object :Callback<ResponseStatus>{
             override fun onResponse(
-                call: Call<ResponseStatusToko>,
-                response: Response<ResponseStatusToko>
+                call: Call<ResponseStatus>,
+                response: Response<ResponseStatus>
             ) {
                 try {
                     if (response.body()!!.status == true) {
@@ -185,7 +185,7 @@ class HomeFragment : Fragment(), AnkoLogger {
 
             }
 
-            override fun onFailure(call: Call<ResponseStatusToko>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseStatus>, t: Throwable) {
                 toast("Kesalahab Jarngan")
             }
 

@@ -58,6 +58,8 @@ class AddProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicker
                 uploadData(file)
             }
         }
+
+        setupToolbar()
     }
 
     private fun openImagePicker() {
@@ -224,6 +226,18 @@ class AddProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicker
                 Log.e("AddProdukActivity", "Error: ${t.localizedMessage}")
             }
         })
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+        supportActionBar?.setTitle("Tambah Produk")
+        binding.toolbar.setNavigationIcon(R.drawable.back)
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun loading(isLoading: Boolean) {

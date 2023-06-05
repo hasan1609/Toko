@@ -47,5 +47,5 @@ data class ProdukModel(
 	val kategori: String? = null,
 
 	@field:SerializedName("status")
-	val status: Int? = null
+	val status: String? = null
 )
