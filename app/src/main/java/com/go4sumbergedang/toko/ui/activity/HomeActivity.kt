@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.go4sumbergedang.toko.R
+import com.go4sumbergedang.toko.session.SessionManager
 import com.go4sumbergedang.toko.ui.fragment.HomeFragment
 import com.go4sumbergedang.toko.ui.fragment.NotifikasiFragment
 import com.go4sumbergedang.toko.ui.fragment.ProfilFragment
@@ -11,6 +12,7 @@ import com.go4sumbergedang.toko.ui.fragment.TransaksiFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
+    lateinit var sessionManager: SessionManager
     private val onNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -43,21 +45,16 @@ class HomeActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
             }
-
             false
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-//        sessionManager = SessionManager(this)
-
         val navView: BottomNavigationView = findViewById(R.id.nav_viewhome)
-
+        sessionManager = SessionManager(this)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-
         moveToFragment(HomeFragment())
-
     }
 
     private fun moveToFragment(fragment: Fragment) {

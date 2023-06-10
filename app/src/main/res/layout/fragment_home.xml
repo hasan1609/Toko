@@ -71,9 +71,22 @@
             android:layout_below="@+id/garis"
             android:paddingHorizontal="23dp"
             android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/txt_kosong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="ANDA BELUM MEMPUNYAI PRODUK APAPUN"
+            android:layout_below="@+id/header_produk"
+            android:paddingHorizontal="23dp"
+            android:textSize="18sp"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_kategori"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header_produk"

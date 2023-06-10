@@ -40,7 +40,6 @@ class EditProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicke
     private lateinit var progressDialog: ProgressDialog
     var api = ApiClient.instance()
     private var selectedImageFile: File? = null
-
     private val PERMISSION_REQUEST_CODE = 100
     private val REQUEST_IMAGE_CAPTURE = 1
     private val REQUEST_IMAGE_PICKER = 2
@@ -54,8 +53,7 @@ class EditProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicke
         produk =
             gson.fromJson(intent.getStringExtra("detail"), ProdukModel::class.java)
         setupToolbar()
-
-        binding.edtNama.setText(produk.namaMakanan)
+        binding.edtNama.setText(produk.namaProduk)
         binding.edtHarga.setText(produk.harga)
         if (produk.keterangan != null){
             binding.edtKeterangan.setText(produk.keterangan.toString())
@@ -66,19 +64,18 @@ class EditProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicke
             "lainnya" -> binding.rgKategori.check(binding.rbLainnya.id)
         }
         val urlImage = getString(R.string.urlImage)
-        val fotoMakanan = produk.fotoMakanan.toString()
+        val fotoMakanan = produk.fotoProduk.toString()
         Picasso.get()
             .load(urlImage+fotoMakanan)
             .into(binding.foto)
-
         binding.addFoto.setOnClickListener {
             openImagePicker()
         }
         binding.btnSimpan.setOnClickListener {
 
             selectedImageFile?.let { file ->
-                uploadDataWithfoto(file, produk.idMakanan.toString())
-            }?: uploadData(produk.idMakanan.toString())
+                uploadDataWithfoto(file, produk.idProduk.toString())
+            }?: uploadData(produk.idProduk.toString())
         }
 
     }
@@ -205,7 +202,7 @@ class EditProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicke
 
         val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
         val imagePart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "foto_makanan",
+            "foto_produk",
             file.name,
             requestBody
         )

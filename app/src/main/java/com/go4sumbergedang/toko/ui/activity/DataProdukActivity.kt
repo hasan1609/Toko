@@ -9,12 +9,12 @@ import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.adapter.ProdukAdapter
 import com.go4sumbergedang.toko.databinding.ActivityDataProdukBinding
 import com.go4sumbergedang.toko.model.*
+import com.go4sumbergedang.toko.session.SessionManager
 import com.go4sumbergedang.toko.webservice.ApiClient
 import com.google.gson.Gson
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,14 +25,16 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
     lateinit var kategori: KategoriModel
     lateinit var mAdapter: ProdukAdapter
     var api = ApiClient.instance()
+    lateinit var sessionManager: SessionManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_data_produk)
         binding.lifecycleOwner = this
+        sessionManager = SessionManager(this)
         val gson = Gson()
         kategori =
             gson.fromJson(intent.getStringExtra("kategori"), KategoriModel::class.java)
-
         setupToolbar()
     }
 
@@ -53,7 +55,6 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
         binding.rvProduk.setHasFixedSize(true)
         (binding.rvProduk.layoutManager as LinearLayoutManager).orientation =
             LinearLayoutManager.VERTICAL
-
         api.getProduk(id, kategori).enqueue(object :Callback<ResponseProduk> {
             override fun onResponse(
                 call: Call<ResponseProduk>,
@@ -75,14 +76,13 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
                                         startActivity<EditProdukActivity>("detail" to noteJson)
                                     }
                                 })
-
                                 mAdapter.setOnDeleteClickListener(object : ProdukAdapter.OnDeleteClickListener{
                                     override fun onDeleteClick(position: Int, note: ProdukModel) {
                                         val builder =
                                             AlertDialog.Builder(this@DataProdukActivity)
                                         builder.setTitle("Hapus Data")
                                         builder.setPositiveButton("Ya") { dialog, which ->
-                                            ApiClient.instance().hapusProduk(note.idMakanan.toString()).enqueue(object :
+                                            ApiClient.instance().hapusProduk(note.idProduk.toString()).enqueue(object :
                                                 Callback<ResponsePostData> {
                                                 override fun onResponse(
                                                     call: Call<ResponsePostData>,
@@ -128,13 +128,10 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
                 toast(t.message.toString())
             }
         })
-
     }
 
     override fun onStart() {
         super.onStart()
-        getProduk("c9927b1a-a334-4bd8-9633-62fb9b843b85", kategori.kategori.toString())
+        getProduk(sessionManager.getId().toString(), kategori.kategori.toString())
     }
-
-
 }

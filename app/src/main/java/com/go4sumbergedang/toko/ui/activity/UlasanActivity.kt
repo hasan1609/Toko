@@ -13,7 +13,6 @@ class UlasanActivity : AppCompatActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ulasan)
         binding.lifecycleOwner = this
-
         setupToolbar()
     }
 

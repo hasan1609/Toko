@@ -79,8 +79,8 @@ class ProdukAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val list = listData[position]
         val urlImage = context.getString(R.string.urlImage)
-        val fotoMakanan = list.fotoMakanan.toString()
-        holder.namaMakanan.text = list.namaMakanan.toString().toUpperCase()
+        val fotoMakanan = list.fotoProduk.toString()
+        holder.namaMakanan.text = list.namaProduk.toString().toUpperCase()
         holder.harga.text = list.harga.toString()
         holder.switchStatus.isChecked = list.status == "tersedia"
         if (holder.switchStatus.isChecked){
@@ -93,10 +93,10 @@ class ProdukAdapter (
             .into(holder.foto)
         holder.switchStatus.setOnClickListener{
             if(holder.switchStatus.isChecked){
-                updateStatus(list.idMakanan.toString(),"tersedia")
+                updateStatus(list.idProduk.toString(),"tersedia")
                 holder.status.text ="Tersedia"
             }else{
-                updateStatus(list.idMakanan.toString(),"habis")
+                updateStatus(list.idProduk.toString(),"habis")
                 holder.status.text ="Habis"
             }
         }

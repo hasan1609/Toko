@@ -8,6 +8,19 @@ import retrofit2.http.*
 
 interface ApiService {
 
+    @FormUrlEncoded
+    @POST("login/resto")
+    fun login(
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("fcm") fcm: String
+    ): Call<ResponseLogin>
+
+    @GET("resto/{id}")
+    fun getToko(
+        @Path("id") id: String
+    ): Call<ResponseToko>
+
     @GET("status/resto/{id}")
     fun getStatusToko(
         @Path("id") id: String
@@ -20,6 +33,29 @@ interface ApiService {
         @Field("param") param: String
     ): Call<ResponseStatus>
 
+    @Multipart
+    @POST("resto/{id}")
+    fun updateTokoWithFoto(
+        @Path("id") id: String,
+        @Part("nama_resto") nama_resto: RequestBody,
+        @Part("alamat") alamat: RequestBody,
+        @Part("tlp") tlp: RequestBody,
+        @Part("jam_buka") jam_buka: RequestBody,
+        @Part("jam_tutup") jam_tutup: RequestBody,
+        @Part foto: MultipartBody.Part?
+    ): Call<ResponsePostData>
+
+    @FormUrlEncoded
+    @POST("resto/{id}")
+    fun updateTokoNofoto(
+        @Path("id") id: String,
+        @Field("nama_resto") nama_resto: String,
+        @Field("alamat") alamat: String,
+        @Field("tlp") tlp: String,
+        @Field("jam_buka") jam_buka: String,
+        @Field("jam_tutup") jam_tutup: String
+    ): Call<ResponsePostData>
+
     @GET("count/kategori/{id}")
     fun getKategori(
         @Path("id") id: String
@@ -31,45 +67,45 @@ interface ApiService {
         @Path("kategori") kategori: String
     ): Call<ResponseProduk>
 
-    @POST("makanan/del/{id}")
+    @POST("produk/del/{id}")
     fun hapusProduk(
         @Path("id") id: String
     ): Call<ResponsePostData>
 
     @Multipart
-    @POST("makanan")
+    @POST("produk")
     fun uploadProduk(
-        @Part("resto_id") resto_id: RequestBody,
-        @Part("nama_makanan") nama_makanan: RequestBody,
+        @Part("user_id") user_id: RequestBody,
+        @Part("nama_produk") nama_produk: RequestBody,
         @Part("harga") harga: RequestBody,
         @Part("keterangan") keterangan: RequestBody,
         @Part("kategori") kategori: RequestBody,
-        @Part foto_makanan: MultipartBody.Part?
+        @Part foto_produk: MultipartBody.Part?
     ): Call<ResponsePostData>
 
     @FormUrlEncoded
-    @POST("status/makanan/{id}")
+    @POST("status/produk/{id}")
     fun updateStatusProduk(
         @Path("id") id: String,
         @Field("param") param: String
     ): Call<ResponseStatus>
 
     @Multipart
-    @POST("makanan/{id}")
+    @POST("produk/{id}")
     fun updateProdukWithFoto(
         @Path("id") id: String,
-        @Part("nama_makanan") nama_makanan: RequestBody,
+        @Part("nama_produk") nama_produk: RequestBody,
         @Part("harga") harga: RequestBody,
         @Part("keterangan") keterangan: RequestBody,
         @Part("kategori") kategori: RequestBody,
-        @Part foto_makanan: MultipartBody.Part?
+        @Part foto_produk: MultipartBody.Part?
     ): Call<ResponsePostData>
 
     @FormUrlEncoded
-    @POST("makanan/{id}")
+    @POST("produk/{id}")
     fun updateProdukNofoto(
         @Path("id") id: String,
-        @Field("nama_makanan") nama_makanan: String,
+        @Field("nama_produk") nama_produk: String,
         @Field("harga") harga: String,
         @Field("keterangan") keterangan: String,
         @Field("kategori") kategori: String,

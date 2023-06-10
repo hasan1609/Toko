@@ -3,34 +3,62 @@ package com.go4sumbergedang.toko.session
 import android.content.Context
 import android.content.SharedPreferences
 
-class SessionManager(context: Context) {
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE)
-    private val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-    companion object {
-        private const val KEY_ID = "id"
-        private const val KEY_LOGGED_IN = "logged_in"
+class SessionManager(private val context: Context) {
+    val privateMode = 0
+    val privateName ="login"
+    var Pref : SharedPreferences?= context.getSharedPreferences(privateName,privateMode)
+    var editor : SharedPreferences.Editor?=Pref?.edit()
+
+    private val islogin = "login"
+    fun setLogin(check: Boolean){
+        editor?.putBoolean(islogin,check)
+        editor?.commit()
     }
 
-    var username: String?
-        get() = sharedPreferences.getString(KEY_ID, null)
-        set(value) = editor.putString(KEY_ID, value).apply()
-
-    var isLoggedIn: Boolean
-        get() = sharedPreferences.getBoolean(KEY_LOGGED_IN, false)
-        set(value) = editor.putBoolean(KEY_LOGGED_IN, value).apply()
-
-    fun login(username: String) {
-        isLoggedIn = true
-        this.username = username
+    fun getLogin():Boolean?
+    {
+        return Pref?.getBoolean(islogin,false)
     }
 
-    fun logout() {
-        isLoggedIn = false
-        username = null
+
+    private val isToken = "isToken"
+    fun setToken(check: String){
+        editor?.putString(isToken,check)
+        editor?.commit()
+    }
+
+    fun getToken():String?
+    {
+        return Pref?.getString(isToken,"")
+    }
+
+    private val isId = "isId"
+    fun setId(check: String){
+        editor?.putString(isId,check)
+        editor?.commit()
+    }
+
+    fun getId():String?
+    {
+        return Pref?.getString(isId,"")
+    }
+
+    private val isNamaToko = "isNamaToko"
+    fun setNamaToko(check: String){
+        editor?.putString(isNamaToko,check)
+        editor?.commit()
+    }
+
+    fun getNamaToko():String?
+    {
+        return Pref?.getString(isNamaToko,"")
     }
 
     fun clearSession() {
-        editor.clear().apply()
+        val editor = Pref?.edit()
+        editor?.clear()
+        editor?.apply()
     }
+
 }

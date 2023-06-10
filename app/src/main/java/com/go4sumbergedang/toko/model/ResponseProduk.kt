@@ -16,8 +16,11 @@ data class ResponseProduk(
 
 data class ProdukModel(
 
-	@field:SerializedName("resto_id")
-	val restoId: String? = null,
+	@field:SerializedName("id_produk")
+	val idProduk: String? = null,
+
+	@field:SerializedName("nama_produk")
+	val namaProduk: String? = null,
 
 	@field:SerializedName("keterangan")
 	val keterangan: Any? = null,
@@ -25,26 +28,23 @@ data class ProdukModel(
 	@field:SerializedName("terjual")
 	val terjual: Any? = null,
 
-	@field:SerializedName("id_makanan")
-	val idMakanan: String? = null,
-
 	@field:SerializedName("harga")
 	val harga: String? = null,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String? = null,
 
-	@field:SerializedName("foto_makanan")
-	val fotoMakanan: String? = null,
-
-	@field:SerializedName("nama_makanan")
-	val namaMakanan: String? = null,
+	@field:SerializedName("user_id")
+	val userId: String? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 
 	@field:SerializedName("kategori")
 	val kategori: String? = null,
+
+	@field:SerializedName("foto_produk")
+	val fotoProduk: String? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null

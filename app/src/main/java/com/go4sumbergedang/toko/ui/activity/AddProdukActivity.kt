@@ -1,4 +1,5 @@
 package com.go4sumbergedang.toko.ui.activity
+
 import android.Manifest
 import android.app.ProgressDialog
 import android.content.ContentResolver
@@ -19,6 +20,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.databinding.ActivityAddProdukBinding
 import com.go4sumbergedang.toko.model.ResponsePostData
+import com.go4sumbergedang.toko.session.SessionManager
 import com.go4sumbergedang.toko.ui.fragment.BottomSheetFilePickerFragment
 import com.go4sumbergedang.toko.webservice.ApiClient
 import okhttp3.MediaType
@@ -36,6 +38,7 @@ class AddProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicker
 
     private lateinit var binding: ActivityAddProdukBinding
     private lateinit var progressDialog: ProgressDialog
+    lateinit var sessionManager: SessionManager
     var api = ApiClient.instance()
     private var selectedImageFile: File? = null
 
@@ -47,6 +50,7 @@ class AddProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicker
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_produk)
         binding.lifecycleOwner = this
+        sessionManager = SessionManager(this)
         progressDialog = ProgressDialog(this)
 
         binding.addFoto.setOnClickListener {
@@ -184,13 +188,13 @@ class AddProdukActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePicker
 
         val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
         val imagePart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "foto_makanan",
+            "foto_produk",
             file.name,
             requestBody
         )
         val requestrestoId: RequestBody = RequestBody.create(
             MediaType.parse("text/plain"),
-            "c9927b1a-a334-4bd8-9633-62fb9b843b85"
+            sessionManager.getId().toString()
         )
         val namaProdukBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), namaProduk)
         val hargaProdukBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), hargaProduk)
