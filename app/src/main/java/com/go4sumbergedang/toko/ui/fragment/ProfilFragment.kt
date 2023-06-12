@@ -79,10 +79,10 @@ class ProfilFragment : Fragment(), AnkoLogger {
                     if (response.isSuccessful) {
                         val data = response.body()
                         if (data!!.status == true) {
-                            binding.txtToko.text = data.data!!.detailUser!!.namaResto.toString()
+                            binding.txtToko.text = data.data!!.detailResto!!.namaResto.toString()
                             val urlImage = getString(R.string.urlImage)
                             Picasso.get()
-                                .load(urlImage+data.data.detailUser!!.foto.toString())
+                                .load(urlImage+data.data.detailResto!!.foto.toString())
                                 .into(binding.foto)
                         }
                     } else {

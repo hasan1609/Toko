@@ -110,4 +110,9 @@ interface ApiService {
         @Field("keterangan") keterangan: String,
         @Field("kategori") kategori: String,
     ): Call<ResponsePostData>
+
+    @GET("review/resto/{id}")
+    fun getReview(
+        @Path("id") id: String
+    ): Call<ResponseUlasan>
 }

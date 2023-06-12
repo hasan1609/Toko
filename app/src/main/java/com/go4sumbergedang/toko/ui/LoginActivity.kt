@@ -55,15 +55,16 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
     }
 
     private fun login(email : String, password : String) {
+        loading(true)
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 toast("gagal dapat token")
+                loading(false)
                 return@OnCompleteListener
             }
             // Get new FCM registration token
             token = task.result
             if (token != null) {
-                loading(true)
                 api.login(email,password,token!!).enqueue(object : Callback<ResponseLogin> {
                     override fun onResponse(
                         call: Call<ResponseLogin>,
@@ -74,7 +75,7 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
                                 if (response.body()!!.status == true) {
                                     sessionManager.setToken(response.body()!!.token!!)
                                     sessionManager.setId(response.body()!!.data!!.idUser!!)
-                                    sessionManager.setNamaToko(response.body()!!.data!!.detailUser!!.namaResto!!)
+                                    sessionManager.setNamaToko(response.body()!!.data!!.detailResto!!.namaResto!!)
                                     sessionManager.setLogin(true)
                                     loading(false)
                                     toast("login berhasil")

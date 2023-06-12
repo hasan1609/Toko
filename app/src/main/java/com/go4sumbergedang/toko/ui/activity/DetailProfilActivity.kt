@@ -98,14 +98,14 @@ class DetailProfilActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePic
                         val data = response.body()
                         if (data!!.status == true) {
                             binding.edtEmail.setText(data.data!!.email)
-                            binding.edtTlp.setText(data.data.detailUser!!.tlp)
-                            binding.edtAlamat.setText(data.data.detailUser.alamat)
-                            binding.edtJmbuka.text = data.data.detailUser.jamBuka
-                            binding.edtJmtutup.text = data.data.detailUser.jamTutup
-                            idDetail = data.data.detailUser.idDetail
+                            binding.edtTlp.setText(data.data.detailResto!!.tlp)
+                            binding.edtAlamat.setText(data.data.detailResto.alamat)
+                            binding.edtJmbuka.text = data.data.detailResto.jamBuka
+                            binding.edtJmtutup.text = data.data.detailResto.jamTutup
+                            idDetail = data.data.detailResto.idDetail
                             val urlImage = getString(R.string.urlImage)
                             Picasso.get()
-                                .load(urlImage+data.data.detailUser.foto.toString())
+                                .load(urlImage+data.data.detailResto.foto.toString())
                                 .into(binding.foto)
                         }
                     } else {

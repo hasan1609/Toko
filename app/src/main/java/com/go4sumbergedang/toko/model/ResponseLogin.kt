@@ -17,7 +17,7 @@ data class ResponseLogin(
 	val token: String? = null
 )
 
-data class DetailUserModel(
+data class DetailRestoModel(
 
 	@field:SerializedName("jam_tutup")
 	val jamTutup: String? = null,
@@ -85,8 +85,8 @@ data class TokoModel(
 	@field:SerializedName("updated_at")
 	val updatedAt: String? = null,
 
-	@field:SerializedName("detail_user")
-	val detailUser: DetailUserModel? = null,
+	@field:SerializedName("detail_resto")
+	val detailResto: DetailRestoModel? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
