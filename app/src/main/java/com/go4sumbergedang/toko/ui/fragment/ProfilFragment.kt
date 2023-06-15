@@ -81,9 +81,15 @@ class ProfilFragment : Fragment(), AnkoLogger {
                         if (data!!.status == true) {
                             binding.txtToko.text = data.data!!.detailResto!!.namaResto.toString()
                             val urlImage = getString(R.string.urlImage)
-                            Picasso.get()
-                                .load(urlImage+data.data.detailResto!!.foto.toString())
-                                .into(binding.foto)
+                            if(data.data.detailResto!!.foto == null){
+                                Picasso.get()
+                                    .load("$urlImage/public/images/no_image.png")
+                                    .into(binding.foto)
+                            }else{
+                                Picasso.get()
+                                    .load(urlImage+data.data.detailResto.foto.toString())
+                                    .into(binding.foto)
+                            }
                         }
                     } else {
                         toast("gagal mendapatkan response")

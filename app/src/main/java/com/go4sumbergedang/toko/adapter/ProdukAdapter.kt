@@ -20,6 +20,7 @@ import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
+import java.util.*
 
 
 class ProdukAdapter (
@@ -132,6 +133,41 @@ class ProdukAdapter (
             }
 
         })
+    }
+
+    val initialDataList = mutableListOf<ProdukModel>().apply {
+        listData.let { addAll(it) }
+    }
+
+    fun getFilter(): Filter {
+        return dataFilter
+    }
+
+    private val dataFilter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filteredList: MutableList<ProdukModel> = mutableListOf()
+            if (constraint == null || constraint.isEmpty()) {
+                initialDataList.let { filteredList.addAll(it) }
+            } else {
+                val query = constraint.toString().trim().toLowerCase()
+                initialDataList.forEach {
+                    if (it.namaProduk!!.toLowerCase(Locale.ROOT).contains(query)) {
+                        filteredList.add(it)
+                    }
+                }
+            }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            if (results?.values is MutableList<*>) {
+                listData.clear()
+                listData.addAll(results.values as MutableList<ProdukModel>)
+                notifyDataSetChanged()
+            }
+        }
     }
 
 }

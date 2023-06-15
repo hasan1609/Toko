@@ -1,8 +1,10 @@
 package com.go4sumbergedang.toko.ui.activity
 
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.go4sumbergedang.toko.R
@@ -26,15 +28,30 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
     lateinit var mAdapter: ProdukAdapter
     var api = ApiClient.instance()
     lateinit var sessionManager: SessionManager
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_data_produk)
         binding.lifecycleOwner = this
         sessionManager = SessionManager(this)
+        progressDialog = ProgressDialog(this)
         val gson = Gson()
         kategori =
             gson.fromJson(intent.getStringExtra("kategori"), KategoriModel::class.java)
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                mAdapter.getFilter().filter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                mAdapter.getFilter().filter(newText)
+                return true
+            }
+
+        })
+
         setupToolbar()
     }
 
@@ -55,6 +72,7 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
         binding.rvProduk.setHasFixedSize(true)
         (binding.rvProduk.layoutManager as LinearLayoutManager).orientation =
             LinearLayoutManager.VERTICAL
+        loading(true)
         api.getProduk(id, kategori).enqueue(object :Callback<ResponseProduk> {
             override fun onResponse(
                 call: Call<ResponseProduk>,
@@ -62,6 +80,7 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
             ) {
                 try {
                     if (response.isSuccessful) {
+                        loading(false)
                         val notesList = mutableListOf<ProdukModel>()
                         val data = response.body()
                         if (data!!.status == true) {
@@ -116,18 +135,31 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
                             }
                         }
                     } else {
+                        loading(false)
                         toast("gagal mendapatkan response")
                     }
                 } catch (e: Exception) {
+                    loading(false)
                     info { "hasan ${e.message}" }
                     toast(e.message.toString())
                 }
             }
             override fun onFailure(call: Call<ResponseProduk>, t: Throwable) {
+                loading(false)
                 info { "hasan ${t.message}" }
                 toast(t.message.toString())
             }
         })
+    }
+
+    private fun loading(isLoading: Boolean) {
+        if (isLoading) {
+            progressDialog.setMessage("Tunggu sebentar...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+        } else {
+            progressDialog.dismiss()
+        }
     }
 
     override fun onStart() {

@@ -64,9 +64,6 @@ data class DetailRestoModel(
 	@field:SerializedName("user_id")
 	val userId: String? = null,
 
-	@field:SerializedName("tlp")
-	val tlp: String? = null,
-
 	@field:SerializedName("longitude")
 	val longitude: String? = null
 )
@@ -81,6 +78,9 @@ data class TokoModel(
 
 	@field:SerializedName("nama")
 	val nama: String? = null,
+
+	@field:SerializedName("tlp")
+	val tlp: String? = null,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String? = null,
