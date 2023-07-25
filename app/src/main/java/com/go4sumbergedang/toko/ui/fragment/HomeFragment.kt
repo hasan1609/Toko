@@ -48,9 +48,11 @@ class HomeFragment : Fragment(), AnkoLogger {
             if(binding.statusToko.isChecked){
                 param = "buka"
                 updateStatus(param!!)
+                binding.txtStatus.text = "Status Toko : Buka"
             }else{
                 param = "tutup"
                 updateStatus(param!!)
+                binding.txtStatus.text = "Status Toko : Tutup"
             }
         }
 
@@ -64,6 +66,7 @@ class HomeFragment : Fragment(), AnkoLogger {
         super.onStart()
         getStatusToko()
         getKategoriProduk()
+
     }
 
     private fun getKategoriProduk() {
@@ -150,6 +153,11 @@ class HomeFragment : Fragment(), AnkoLogger {
                     if (response.isSuccessful) {
                         val data = response.body()
                         binding.statusToko.isChecked = data!!.data!!.status == "buka"
+                        if (data!!.data!!.status== "buka"){
+                            binding.txtStatus.text = "Status Toko : Buka"
+                        }else{
+                            binding.txtStatus.text = "Status Toko : Tutup"
+                        }
                     } else {
                         toast("gagal mendapatkan response")
                     }

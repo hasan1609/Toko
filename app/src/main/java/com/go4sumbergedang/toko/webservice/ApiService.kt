@@ -37,11 +37,18 @@ interface ApiService {
     @POST("resto/{id}")
     fun updateTokoWithFoto(
         @Path("id") id: String,
-        @Part("nama_resto") nama_resto: RequestBody,
-        @Part("alamat") alamat: RequestBody,
+        @Part("nama") nama: RequestBody,
         @Part("tlp") tlp: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("nik") nik: RequestBody,
+        @Part("tempat_lahir") tempat_lahir: RequestBody,
+        @Part("ttl") ttl: RequestBody,
+        @Part("alamat") alamat: RequestBody,
         @Part("jam_buka") jam_buka: RequestBody,
         @Part("jam_tutup") jam_tutup: RequestBody,
+        @Part("latitude") latitude: RequestBody,
+        @Part("longitude") longitude: RequestBody,
+        @Part("nama_resto") nama_resto: RequestBody,
         @Part foto: MultipartBody.Part?
     ): Call<ResponsePostData>
 
@@ -49,11 +56,21 @@ interface ApiService {
     @POST("resto/{id}")
     fun updateTokoNofoto(
         @Path("id") id: String,
-        @Field("nama_resto") nama_resto: String,
-        @Field("alamat") alamat: String,
+        @Field("nama") nama: String,
         @Field("tlp") tlp: String,
+        @Field("email") email: String,
+        @Field("nik") nik: String,
+        @Field("tempat_lahir") tempat_lahir: String,
+        @Field("ttl") ttl: String,
+        @Field("alamat") alamat: String,
         @Field("jam_buka") jam_buka: String,
-        @Field("jam_tutup") jam_tutup: String
+        @Field("jam_tutup") jam_tutup: String,
+        @Field("latitude") latitude: String,
+        @Field("longitude") longitude: String,
+        @Field("nama_resto") nama_resto: String,
+
+
+
     ): Call<ResponsePostData>
 
     @GET("count/kategori/{id}")

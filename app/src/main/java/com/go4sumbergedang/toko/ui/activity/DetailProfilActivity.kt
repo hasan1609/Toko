@@ -55,6 +55,12 @@ class DetailProfilActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePic
     var api = ApiClient.instance()
     private var selectedImageFile: File? = null
     var idDetail : String? = null
+    var namaR :String? = null
+    var nikR :String? = null
+    var tempatLahirR :String? = null
+    var ttlR :String? = null
+    var latitudeR :String? = null
+    var longitudeR :String? = null
     private val PERMISSION_REQUEST_CODE = 100
     private val REQUEST_IMAGE_CAPTURE = 1
     private val REQUEST_IMAGE_PICKER = 2
@@ -102,7 +108,14 @@ class DetailProfilActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePic
                             binding.edtAlamat.setText(data.data.detailResto!!.alamat)
                             binding.edtJmbuka.text = data.data.detailResto.jamBuka
                             binding.edtJmtutup.text = data.data.detailResto.jamTutup
-                            idDetail = data.data.detailResto.idDetail
+                            idDetail = data.data.detailResto.userId
+                            sessionManager.setNamaToko(data.data.detailResto.namaResto.toString())
+                            namaR = data.data.nama
+                            nikR = data.data.detailResto.nik
+                            tempatLahirR = data.data.detailResto.tempatLahir
+                            ttlR = data.data.detailResto.ttl
+                            latitudeR = data.data.detailResto.latitude
+                            longitudeR = data.data.detailResto.longitude
                             val urlImage = getString(R.string.urlImage)
                             if(data.data.detailResto.foto == null){
                                 Picasso.get()
@@ -256,13 +269,14 @@ class DetailProfilActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePic
     }
 
     private fun uploadDataWithfoto(file: File, idToko: String) {
-        val nama = binding.edtNama.text.toString()
+        val namaResto = binding.edtNama.text.toString()
         val tlp = binding.edtTlp.text.toString()
         val alamat = binding.edtAlamat.text.toString()
         val jamBuka = binding.edtJmbuka.text.toString()
         val jamTutup = binding.edtJmtutup.text.toString()
+        val email = binding.edtEmail.text.toString()
 
-        if (nama.isEmpty() || tlp.isEmpty() || alamat.isEmpty()) {
+        if (namaResto.isEmpty() || tlp.isEmpty() || alamat.isEmpty()) {
             Toast.makeText(this, "Jangan kosongi kolom", Toast.LENGTH_SHORT).show()
             return
         }
@@ -273,20 +287,34 @@ class DetailProfilActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePic
             file.name,
             requestBody
         )
-        val namaBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), nama)
+        val namaBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), namaR.toString())
         val tlpBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), tlp)
+        val emailBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), email)
+        val nikBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), nikR.toString())
+        val tempatBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), tempatLahirR.toString())
+        val ttlBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), ttlR.toString())
         val alamatBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), alamat)
         val jamBukaBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), jamBuka)
         val jamTutupBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), jamTutup)
+        val latBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), latitudeR.toString())
+        val longBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), longitudeR.toString())
+        val namaRestoBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"), namaResto)
 
         loading(true)
         api.updateTokoWithFoto(
             idToko,
             namaBody,
-            alamatBody,
             tlpBody,
+            emailBody,
+            nikBody,
+            tempatBody,
+            ttlBody,
+            alamatBody,
             jamBukaBody,
             jamTutupBody,
+            latBody,
+            longBody,
+            namaRestoBody,
             imagePart
         ).enqueue(object : Callback<ResponsePostData> {
             override fun onResponse(
@@ -311,13 +339,14 @@ class DetailProfilActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePic
     }
 
     private fun uploadData(idToko: String) {
-        val nama = binding.edtNama.text.toString()
+        val namaResto = binding.edtNama.text.toString()
+        val email = binding.edtEmail.text.toString()
         val tlp = binding.edtTlp.text.toString()
         val alamat = binding.edtAlamat.text.toString()
         val jamBuka = binding.edtJmbuka.text.toString()
         val jamTutup = binding.edtJmtutup.text.toString()
 
-        if (nama.isEmpty() || tlp.isEmpty() || alamat.isEmpty()) {
+        if (namaResto.isEmpty() || tlp.isEmpty() || alamat.isEmpty()) {
             Toast.makeText(this, "Jangan kosongi kolom", Toast.LENGTH_SHORT).show()
             return
         }
@@ -325,11 +354,18 @@ class DetailProfilActivity : AppCompatActivity(), AnkoLogger, BottomSheetFilePic
         loading(true)
         api.updateTokoNofoto(
             idToko,
-            nama,
-            alamat,
+            namaR.toString(),
             tlp,
+            email,
+            nikR.toString(),
+            tempatLahirR.toString(),
+            ttlR.toString(),
+            alamat,
             jamBuka,
-            jamTutup
+            jamTutup,
+            latitudeR.toString(),
+            longitudeR.toString(),
+            namaResto
         ).enqueue(object : Callback<ResponsePostData> {
             override fun onResponse(
                 call: Call<ResponsePostData>,

@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Toko"
+        android:theme="@style/AppTheme"
         tools:targetApi="31"
         android:networkSecurityConfig="@xml/network_scurity_config">
         <activity
