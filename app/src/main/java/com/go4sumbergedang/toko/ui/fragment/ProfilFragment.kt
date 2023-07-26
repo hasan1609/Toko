@@ -1,6 +1,8 @@
 package com.go4sumbergedang.toko.ui.fragment
 
 import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -70,11 +72,21 @@ class ProfilFragment : Fragment(), AnkoLogger {
     }
 
     private fun getData() {
+        if (!isAdded) {
+            return
+        }
+        if (!isNetworkAvailable()) {
+            toast("Tidak ada koneksi internet. Silakan cek koneksi Anda dan coba lagi.")
+            return
+        }
         api.getToko(sessionManager.getId().toString()).enqueue(object : Callback<ResponseToko> {
             override fun onResponse(
                 call: Call<ResponseToko>,
                 response: Response<ResponseToko>
             ) {
+                if (!isAdded) {
+                    return
+                }
                 try {
                     if (response.isSuccessful) {
                         val data = response.body()
@@ -100,11 +112,18 @@ class ProfilFragment : Fragment(), AnkoLogger {
                 }
             }
             override fun onFailure(call: Call<ResponseToko>, t: Throwable) {
-                info { "hasan ${t.message}" }
-                toast(t.message.toString())
+                if (isAdded) {
+                    info { "hasan ${t.message}" }
+                    toast(t.message.toString())
+                }
             }
         })
+    }
 
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
 }
