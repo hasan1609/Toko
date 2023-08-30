@@ -24,7 +24,7 @@ import retrofit2.Response
 
 class DataProdukActivity : AppCompatActivity(), AnkoLogger{
     lateinit var binding: ActivityDataProdukBinding
-    lateinit var kategori: KategoriModel
+    lateinit var kategori: KategoriProdukModel
     lateinit var mAdapter: ProdukAdapter
     var api = ApiClient.instance()
     lateinit var sessionManager: SessionManager
@@ -38,7 +38,7 @@ class DataProdukActivity : AppCompatActivity(), AnkoLogger{
         progressDialog = ProgressDialog(this)
         val gson = Gson()
         kategori =
-            gson.fromJson(intent.getStringExtra("kategori"), KategoriModel::class.java)
+            gson.fromJson(intent.getStringExtra("kategori"), KategoriProdukModel::class.java)
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 mAdapter.getFilter().filter(query)

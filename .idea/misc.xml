@@ -27,6 +27,7 @@
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/drawable/switch_track_on.xml" value="0.1" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/activity_add_produk.xml" value="0.25" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/activity_data_produk.xml" value="0.1" />
+        <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/activity_detail_order_log.xml" value="0.18" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/activity_detail_profil.xml" value="0.22" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/activity_home.xml" value="0.14322916666666666" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/activity_ulasan.xml" value="0.18" />
@@ -41,6 +42,9 @@
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/list_kategori.xml" value="0.22" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/list_notifikasi.xml" value="0.2234375" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/list_produk.xml" value="0.22" />
+        <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/list_produk_order_log.xml" value="0.22" />
+        <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/list_riwayat.xml" value="0.2234375" />
+        <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/list_riwayat_order.xml" value="0.15" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/layout/list_ulasan.xml" value="0.67" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/Toko/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/xampp/htdocs/go4-sumbergedang/android/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />

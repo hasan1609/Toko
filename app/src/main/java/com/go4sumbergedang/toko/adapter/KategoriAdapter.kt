@@ -8,16 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.go4sumbergedang.toko.R
-import com.go4sumbergedang.toko.model.KategoriModel
+import com.go4sumbergedang.toko.model.KategoriProdukModel
 
 class KategoriAdapter (
-    private val listData :MutableList<KategoriModel>,
+    private val listData :MutableList<KategoriProdukModel>,
     private val context: Context
 ) : RecyclerView.Adapter<KategoriAdapter.ViewHolder>(){
 
     private var dialog: Dialog? = null
     interface Dialog {
-        fun onClick(position: Int, list : KategoriModel)
+        fun onClick(position: Int, list : KategoriProdukModel)
     }
 
     fun setDialog(dialog: Dialog) {

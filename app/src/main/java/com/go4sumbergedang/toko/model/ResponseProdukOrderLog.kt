@@ -2,10 +2,10 @@ package com.go4sumbergedang.toko.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseProduk(
+data class ResponseProdukOrderLog(
 
 	@field:SerializedName("data")
-	val data: List<ProdukModel?>? = null,
+	val data: List<ProdukOrderLogModel?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -13,3 +13,5 @@ data class ResponseProduk(
 	@field:SerializedName("status")
 	val status: Boolean? = null
 )
+
+

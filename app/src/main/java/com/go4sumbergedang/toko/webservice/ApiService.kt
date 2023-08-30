@@ -132,4 +132,14 @@ interface ApiService {
     fun getReview(
         @Path("id") id: String
     ): Call<ResponseUlasan>
+
+    @GET("order/resto/{id}")
+    fun getOrderLog(
+        @Path("id") id: String
+    ): Call<ResponseOrderLog>
+
+    @GET("order/resto/produk/{id}")
+    fun getProdukOrderLog(
+        @Path("id") id: String
+    ): Call<ResponseProdukOrderLog>
 }

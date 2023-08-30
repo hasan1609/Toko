@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.TransaksiFragment">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".ui.fragment.TransaksiFragment">
+
         <TextView
+            android:id="@+id/txt_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:paddingHorizontal="23dp"
             android:text="Riwayat Transaksi"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:layout_marginVertical="20dp"
-            android:gravity="center"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_transaksi"
+            android:visibility="gone"
+            android:layout_below="@+id/txt_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Maaf belum ada riwayat order"
-            android:textSize="14dp"
-            android:textStyle="normal"
-            android:gravity="center"/>
-    </LinearLayout>
+            android:layout_marginTop="16dp"/>
+        <TextView
+            android:id="@+id/txt_kosong"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:paddingHorizontal="23dp"
+            android:text="Belum ada riwayat penjualan"
+            android:textSize="18sp"
+            android:textColor="@color/scndary_color"
+            android:textStyle="bold" />
 
-</FrameLayout>
+    </RelativeLayout>
+
+
+</layout>

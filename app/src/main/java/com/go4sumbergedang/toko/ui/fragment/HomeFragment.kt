@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.adapter.KategoriAdapter
 import com.go4sumbergedang.toko.databinding.FragmentHomeBinding
-import com.go4sumbergedang.toko.model.KategoriModel
+import com.go4sumbergedang.toko.model.KategoriProdukModel
 import com.go4sumbergedang.toko.model.ResponseKategori
 import com.go4sumbergedang.toko.model.ResponseStatus
 import com.go4sumbergedang.toko.session.SessionManager
@@ -95,7 +95,7 @@ class HomeFragment : Fragment(), AnkoLogger {
                         }else{
                             binding.txtKosong.visibility = View.GONE
                             binding.rvKategori.visibility = View.VISIBLE
-                            val notesList = mutableListOf<KategoriModel>()
+                            val notesList = mutableListOf<KategoriProdukModel>()
                             val data = response.body()
                             if (data!!.status == true) {
                                 for (hasil in data.data!!) {
@@ -104,7 +104,7 @@ class HomeFragment : Fragment(), AnkoLogger {
                                 mAdapter = KategoriAdapter(notesList, requireActivity())
                                 binding.rvKategori.adapter = mAdapter
                                 mAdapter.setDialog(object : KategoriAdapter.Dialog {
-                                    override fun onClick(position: Int, note: KategoriModel) {
+                                    override fun onClick(position: Int, note: KategoriProdukModel) {
                                         val gson = Gson()
                                         val noteJson = gson.toJson(note)
                                         startActivity<DataProdukActivity>("kategori" to noteJson)
