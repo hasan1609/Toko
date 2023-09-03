@@ -22,6 +22,7 @@ import com.go4sumbergedang.toko.webservice.ApiClient
 import com.google.gson.Gson
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
@@ -75,10 +76,10 @@ class TransaksiFragment : Fragment(), AnkoLogger {
                                 mAdapter = RiwayatOrderAdapter(notesList, requireActivity())
                                 binding.rvTransaksi.adapter = mAdapter
                                 mAdapter.setDialog(object : RiwayatOrderAdapter.Dialog {
-                                    override fun onClick(position: Int, note: DataItemOrder) {
-                                        val gson = Gson()
-                                        val noteJson = gson.toJson(note)
-                                        startActivity<DetailOrderLogActivity>("detailOrder" to noteJson)
+                                    override fun onClick(position: Int, idOrder: String) {
+                                        val intent = intentFor<DetailOrderLogActivity>()
+                                            .putExtra("idOrder", idOrder)
+                                        startActivity(intent)
                                     }
                                 })
                                 mAdapter.notifyDataSetChanged()

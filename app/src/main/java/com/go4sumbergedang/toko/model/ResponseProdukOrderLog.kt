@@ -4,8 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseProdukOrderLog(
 
-	@field:SerializedName("data")
-	val data: List<ProdukOrderLogModel?>? = null,
+	@field:SerializedName("produk")
+	val produk: List<ProdukOrderLogModel?>? = null,
+
+	@field:SerializedName("order")
+	val order: DetailOrderModel? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

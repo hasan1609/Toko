@@ -10,6 +10,7 @@ import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.adapter.ProdukOrderLogAdapter
 import com.go4sumbergedang.toko.databinding.ActivityDetailOrderLogBinding
 import com.go4sumbergedang.toko.model.DataItemOrder
+import com.go4sumbergedang.toko.model.DetailOrderModel
 import com.go4sumbergedang.toko.model.ProdukOrderLogModel
 import com.go4sumbergedang.toko.model.ResponseProdukOrderLog
 import com.go4sumbergedang.toko.session.SessionManager
@@ -27,11 +28,14 @@ import java.util.*
 
 class DetailOrderLogActivity : AppCompatActivity(), AnkoLogger {
     lateinit var binding: ActivityDetailOrderLogBinding
-    lateinit var detailOrder: DataItemOrder
     lateinit var mAdapter: ProdukOrderLogAdapter
     var api = ApiClient.instance()
     lateinit var sessionManager: SessionManager
     private lateinit var progressDialog: ProgressDialog
+
+    companion object {
+        const val idOrder = "idOrder"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,45 +43,10 @@ class DetailOrderLogActivity : AppCompatActivity(), AnkoLogger {
         binding.lifecycleOwner = this
         sessionManager = SessionManager(this)
         progressDialog = ProgressDialog(this)
-        val gson = Gson()
-        detailOrder =
-            gson.fromJson(intent.getStringExtra("detailOrder"), DataItemOrder::class.java)
 
-        binding.namaDriver.text = detailOrder.order!!.driver!!.nama.toString()
-        binding.txtNamaCustomer.text = detailOrder.order!!.customer!!.nama.toString()
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
-        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
-        val date = dateFormat.parse(detailOrder.order!!.createdAt.toString())
-        val formattedDate = SimpleDateFormat("dd MMM yyyy, HH:mm:ss").format(date!!)
-        binding.txtTgl.text = formattedDate
-        binding.txtTujuan.text = detailOrder.order!!.alamatTujuan
-
-        val formatter = DecimalFormat.getCurrencyInstance() as DecimalFormat
-        val symbols = formatter.decimalFormatSymbols
-        symbols.currencySymbol = "Rp. "
-        formatter.decimalFormatSymbols = symbols
-        val totalx = detailOrder.order!!.total!!.toDoubleOrNull() ?: 0.0
-        val totals = formatter.format(totalx)
-        binding.txtTotal.text = totals
-        when (detailOrder.order!!.status) {
-            "0" -> {
-                binding.txtStatus.text = "Pesanan Aktif"
-                binding.txtStatus.setTextColor(this.getColor(R.color.primary_color))
-            }
-            "4" -> {
-                binding.txtStatus.text = "Selesai"
-            }
-            "5" -> {
-                binding.txtStatus.text = "Batal"
-                binding.txtStatus.setTextColor(this.getColor(R.color.red))
-            }
-            else -> {
-                binding.txtStatus.text = "Sedang diproses Driver"
-            }
-        }
-
+        val data = intent.getStringExtra(idOrder)
         setupToolbar()
-        getProduk(detailOrder.order!!.produkOrder.toString())
+        getProduk(data.toString())
     }
 
     private fun setupToolbar() {
@@ -93,25 +62,60 @@ class DetailOrderLogActivity : AppCompatActivity(), AnkoLogger {
 
     }
 
-    private fun getProduk(produkId: String) {
+    private fun getProduk(orderId: String) {
         binding.rvProduk.layoutManager = LinearLayoutManager(this)
         binding.rvProduk.setHasFixedSize(true)
         (binding.rvProduk.layoutManager as LinearLayoutManager).orientation =
             LinearLayoutManager.VERTICAL
         loading(true)
-        api.getProdukOrderLog(produkId).enqueue(object :
+        api.getProdukOrderLog(orderId).enqueue(object :
             Callback<ResponseProdukOrderLog> {
             override fun onResponse(call: Call<ResponseProdukOrderLog>, response: Response<ResponseProdukOrderLog>) {
                 try {
                     if (response.isSuccessful) {
                         loading(false)
-                        val notesList = mutableListOf<ProdukOrderLogModel>()
+                        val produkList = mutableListOf<ProdukOrderLogModel>()
                         val data = response.body()
-                        if (data!!.status == true) {
-                            for (hasil in data.data!!) {
-                                notesList.add(hasil!!)
+                        val orderList = data!!.order
+                        if (data.status == true) {
+                            binding.namaDriver.text = orderList!!.driver!!.nama.toString()
+                            binding.txtNamaCustomer.text = orderList.customer!!.nama.toString()
+                            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+                            dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+                            val date = dateFormat.parse(orderList.createdAt.toString())
+                            val formattedDate = SimpleDateFormat("dd MMM yyyy, HH:mm:ss").format(date!!)
+                            binding.txtTgl.text = formattedDate
+                            binding.txtTujuan.text = orderList.alamatTujuan
+
+                            val formatter = DecimalFormat.getCurrencyInstance() as DecimalFormat
+                            val symbols = formatter.decimalFormatSymbols
+                            symbols.currencySymbol = "Rp. "
+                            formatter.decimalFormatSymbols = symbols
+                            val totalx = orderList.total!!.toDoubleOrNull() ?: 0.0
+                            val totals = formatter.format(totalx)
+                            binding.txtTotal.text = totals
+                            when (orderList.status) {
+                                "0" -> {
+                                    binding.txtStatus.text = "Pesanan Aktif"
+                                    binding.txtStatus.setTextColor(getColor(R.color.primary_color))
+                                }
+                                "4" -> {
+                                    binding.txtStatus.text = "Selesai"
+                                    binding.txtStatus.setTextColor(getColor(R.color.teal_200))
+                                }
+                                "5" -> {
+                                    binding.txtStatus.text = "Batal"
+                                    binding.txtStatus.setTextColor(getColor(R.color.red))
+                                }
+                                else -> {
+                                    binding.txtStatus.text = "Sedang diproses Driver"
+                                    binding.txtStatus.setTextColor(getColor(R.color.black))
+                                }
                             }
-                            mAdapter = ProdukOrderLogAdapter(notesList, this@DetailOrderLogActivity)
+                            for (hasil in data.produk!!) {
+                                produkList.add(hasil!!)
+                            }
+                            mAdapter = ProdukOrderLogAdapter(produkList, this@DetailOrderLogActivity)
                             binding.rvProduk.adapter = mAdapter
                             mAdapter.notifyDataSetChanged()
                         }

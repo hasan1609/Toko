@@ -20,7 +20,7 @@ class RiwayatOrderAdapter (
 
     private var dialog: Dialog? = null
     interface Dialog {
-        fun onClick(position: Int, list : DataItemOrder)
+        fun onClick(position: Int, idOrder : String)
     }
 
     fun setDialog(dialog: Dialog) {
@@ -103,7 +103,7 @@ class RiwayatOrderAdapter (
 
         holder.itemView.setOnClickListener {
             if (dialog!=null){
-                dialog!!.onClick(position,list)
+                dialog!!.onClick(position, list.order.idOrder.toString())
             }
         }
     }
