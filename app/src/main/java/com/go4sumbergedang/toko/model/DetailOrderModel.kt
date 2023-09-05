@@ -25,6 +25,9 @@ data class DetailOrderModel(
     @field:SerializedName("alamat_tujuan")
     val alamatTujuan: String? = null,
 
+    @field:SerializedName("alamat_dari")
+    val alamatDari: String? = null,
+
     @field:SerializedName("id_order")
     val idOrder: String? = null,
 
@@ -33,6 +36,12 @@ data class DetailOrderModel(
 
     @field:SerializedName("latitude_tujuan")
     val latitudeTujuan: String? = null,
+
+    @field:SerializedName("kategori")
+    val kategori: String? = null,
+
+    @field:SerializedName("latitude_dari")
+    val latitudeDari: String? = null,
 
     @field:SerializedName("ongkos_kirim")
     val ongkosKirim: String? = null,
@@ -56,5 +65,8 @@ data class DetailOrderModel(
     val status: String? = null,
 
     @field:SerializedName("longitude_tujuan")
-    val longitudeTujuan: String? = null
+    val longitudeTujuan: String? = null,
+
+    @field:SerializedName("longitude_dari")
+    val longitudeDari: String? = null
 )

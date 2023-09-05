@@ -11,8 +11,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.go4sumbergedang.toko.R
 import com.go4sumbergedang.toko.model.NotifikasiLogModel
-import com.go4sumbergedang.toko.model.UlasanModel
-import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
 
