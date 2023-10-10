@@ -55,8 +55,14 @@ data class DetailOrderModel(
     @field:SerializedName("customer")
     val customer: UserModel? = null,
 
+    @field:SerializedName("resto")
+    val resto: UserModel? = null,
+
     @field:SerializedName("detail_customer")
     val detailCustomer: DetailCustomerModel? = null,
+
+    @field:SerializedName("detail_resto")
+    val detailResto: DetailRestoModel? = null,
 
     @field:SerializedName("customer_id")
     val customerId: String? = null,

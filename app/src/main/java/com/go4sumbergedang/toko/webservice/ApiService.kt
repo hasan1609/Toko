@@ -138,8 +138,8 @@ interface ApiService {
         @Path("id") id: String
     ): Call<ResponseOrderLog>
 
-    @GET("order/resto/produk/{id}")
-    fun getProdukOrderLog(
+    @GET("order/detail/{id}")
+    fun getDetailOrderLog(
         @Path("id") id: String
     ): Call<ResponseProdukOrderLog>
 

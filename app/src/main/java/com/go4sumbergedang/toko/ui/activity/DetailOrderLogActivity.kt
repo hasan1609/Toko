@@ -68,7 +68,7 @@ class DetailOrderLogActivity : AppCompatActivity(), AnkoLogger {
         (binding.rvProduk.layoutManager as LinearLayoutManager).orientation =
             LinearLayoutManager.VERTICAL
         loading(true)
-        api.getProdukOrderLog(orderId).enqueue(object :
+        api.getDetailOrderLog(orderId).enqueue(object :
             Callback<ResponseProdukOrderLog> {
             override fun onResponse(call: Call<ResponseProdukOrderLog>, response: Response<ResponseProdukOrderLog>) {
                 try {
