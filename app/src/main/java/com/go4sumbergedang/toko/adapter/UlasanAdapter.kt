@@ -59,13 +59,13 @@ class UlasanAdapter (
                 .into(holder.foto)
         }
         holder.nama.text = list.userCust!!.nama
-        holder.txtStar.text = list.rating.toString()
-        if (list.ulasan != null) {
-            holder.txtUlasan.text = list.ulasan
+        holder.txtStar.text = list.ratingResto.toString()
+        if (list.ulasanResto != null) {
+            holder.txtUlasan.text = list.ulasanResto.toString()
         }else{
             holder.txtUlasan.visibility = View.GONE
         }
-        holder.star.rating = list.rating!!.toFloat()
+        holder.star.rating = list.ratingResto!!.toString().toFloat()
     }
 
 }

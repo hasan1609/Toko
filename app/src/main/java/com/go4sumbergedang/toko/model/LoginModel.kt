@@ -2,7 +2,7 @@ package com.go4sumbergedang.toko.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserModel(
+data class LoginModel(
 
     @field:SerializedName("fcm")
     val fcm: String? = null,
@@ -19,6 +19,8 @@ data class UserModel(
     @field:SerializedName("updated_at")
     val updatedAt: String? = null,
 
+    @field:SerializedName("detail_resto")
+    val detailResto: DetailRestoModel? = null,
 
     @field:SerializedName("created_at")
     val createdAt: String? = null,

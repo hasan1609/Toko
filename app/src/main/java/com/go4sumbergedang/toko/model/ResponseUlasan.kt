@@ -13,21 +13,3 @@ data class ResponseUlasan(
 	@field:SerializedName("status")
 	val status: Boolean? = null
 )
-
-data class Customer(
-
-	@field:SerializedName("foto")
-	val foto: String? = null,
-
-	@field:SerializedName("user_id")
-	val userId: String? = null
-)
-
-data class UserCust(
-
-	@field:SerializedName("nama")
-	val nama: String? = null,
-
-	@field:SerializedName("id_user")
-	val idUser: String? = null
-)
