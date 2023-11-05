@@ -16,6 +16,15 @@ interface ApiService {
         @Field("fcm") fcm: String
     ): Call<ResponseLogin>
 
+    // update password
+    @FormUrlEncoded
+    @POST("update-password")
+    fun updatePassword(
+        @Field("id") id: String,
+        @Field("current_password") current_password: String,
+        @Field("password") password: String,
+    ): Call<ResponsePostData>
+
     @GET("resto/{id}")
     fun getToko(
         @Path("id") id: String

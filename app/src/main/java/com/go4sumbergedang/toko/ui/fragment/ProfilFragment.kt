@@ -16,6 +16,7 @@ import com.go4sumbergedang.toko.session.SessionManager
 import com.go4sumbergedang.toko.ui.LoginActivity
 import com.go4sumbergedang.toko.ui.activity.DetailProfilActivity
 import com.go4sumbergedang.toko.ui.activity.UlasanActivity
+import com.go4sumbergedang.toko.ui.activity.UpdatePasswordActivity
 import com.go4sumbergedang.toko.webservice.ApiClient
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.AnkoLogger
@@ -43,13 +44,16 @@ class ProfilFragment : Fragment(), AnkoLogger {
         binding.detailToko.setOnClickListener{
             startActivity<DetailProfilActivity>()
         }
+        binding.updatePassword.setOnClickListener {
+            startActivity<UpdatePasswordActivity>()
+        }
         binding.ulasan.setOnClickListener {
             startActivity<UlasanActivity>()
         }
 
         binding.logout.setOnClickListener {
             val builder = AlertDialog.Builder(requireActivity())
-            builder.setMessage("Logout ? ")
+            builder.setMessage("Yakin Ingin Keluar")
             builder.setPositiveButton("Ok") { dialog, which ->
                 sessionManager.clearSession()
                 startActivity<LoginActivity>()
@@ -57,7 +61,7 @@ class ProfilFragment : Fragment(), AnkoLogger {
                 requireActivity().finish()
             }
 
-            builder.setNegativeButton("Cancel ?") { dialog, which ->
+            builder.setNegativeButton("Cancel") { dialog, which ->
                 dialog.dismiss()
             }
 
